@@ -6,7 +6,7 @@ Machine learning algorithm to identify real and fake stars within a satellite se
 
 # What the Project Is
 
-This project is based on [A survey of algorithms for star identification with low-cost star trackers](https://www.researchgate.net/publication/251506612_A_survey_of_algorithms_for_star_identification_with_low-cost_star_trackers) (K Ho, 2012)
+This project is based on [A survey of algorithms for star identification with low-cost star trackers](https://www.researchgate.net/publication/251506612_A_survey_of_algorithms_for_star_identification_with_low-cost_star_trackers) (K Ho, 2012).
 Small satellites often have bad sensors and may interpret signal noise as fake stars when aligning itself. The paper investigates
 the accuracy of different algorithms for orientation. I wanted to investigate if machine learning models could help interpret
 data to discern real and fake stars.

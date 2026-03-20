@@ -2,3 +2,4 @@ astroquery
 astropy
 pandas
 numpy
+scikit-learn

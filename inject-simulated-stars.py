@@ -7,6 +7,7 @@ import numpy as np
 from astropy.coordinates import SkyCoord
 
 HIPPARCOS = pd.read_csv("data/hipparcos_vmag6.csv")
+HIPPARCOS = HIPPARCOS.dropna(subset=["RAICRS", "DEICRS"])
 
 def get_stars_in_fov(df, ra, dec, fov):
     """
@@ -91,6 +92,7 @@ def run_simulation(repetitions=1000, sensor_fov=4, max_no_false_stars=4):
     :return: A Pandas DataFrame object containing visible and fake star data for every simulation.
     """
     stars_frame_list = []
+    catalogue_coords = SkyCoord(ra=HIPPARCOS["RAICRS"].values, dec=HIPPARCOS["DEICRS"].values, unit="deg")
 
     for i in range(repetitions):
         ra = np.random.uniform(0, 360)
@@ -101,6 +103,9 @@ def run_simulation(repetitions=1000, sensor_fov=4, max_no_false_stars=4):
         false_frame["label"] = 0
 
         stars_frame = pd.concat([filtered_frame, false_frame], ignore_index=True)
+        star_coords = SkyCoord(ra=stars_frame["RAICRS"].values, dec=stars_frame["DEICRS"].values, unit="deg")
+        idx, sep, _ = star_coords.match_to_catalog_sky(catalogue_coords)
+        stars_frame["min_star_sep"] = sep.deg
         stars_frame_list.append(stars_frame)
 
     return pd.concat(stars_frame_list)

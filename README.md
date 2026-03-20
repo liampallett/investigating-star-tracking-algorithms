@@ -1,4 +1,4 @@
-# Investigating Star Tracking Algorithms
+# Investigating Star Tracking Algorithms via Neural Networks
 
 Project description.
 
@@ -34,10 +34,6 @@ def angular_separation(ra1, dec1, ra2, dec2):
 
     return degrees(delta_sigma)
 
-ra = np.random.uniform(0, 360)
-dec = np.random.uniform(-90, 90)
-filtered_frame = get_stars_in_fov(HIPPARCOS, ra, dec, 4)
-
 ra1 = 340
 ra2 = 350
 dec1 = 70
@@ -51,6 +47,12 @@ print(angular_separation(ra1, dec1, ra2, dec2), c1.separation(c2))
 returns `10.293451406994345 10d17m36.42506518s`, converted to degrees, my calculation is accurate to at least 6 significant figures.
 However, astropy's separation method is preferred as we can directly pass table columns into the method rather than doing
 scalar operations.
+
+## Separating training and test data by file
+
+By separating training and test data into two separate files, it allows us to make sure that the model sees completely new
+data when it comes to testing it. It will learn to classify stars based on the training data and training data alone, meaning
+we will get the most accurate metrics.
 
 # Tech Stack
 

@@ -105,9 +105,15 @@ def run_simulation(repetitions=1000, sensor_fov=4, max_no_false_stars=4):
     return pd.concat(stars_frame_list)
 
 
-simulation_data = run_simulation(1000, 4, 5)
+training_data = run_simulation(5000, 4, 5)
 
-print(f"Total samples: {len(simulation_data)}")
-print(simulation_data["label"].value_counts())
+print(f"Training samples: {len(training_data)}")
+print(training_data["label"].value_counts())
 
-simulation_data.to_csv("data/simulation_data.csv", index=False)
+test_data = run_simulation(1000, 4, 5)
+
+print(f"\nTest samples: {len(test_data)}")
+print(test_data["label"].value_counts())
+
+training_data.to_csv("data/training_data.csv", index=False)
+test_data.to_csv("data/test_data.csv", index=False)

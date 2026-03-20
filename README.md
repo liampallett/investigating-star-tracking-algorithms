@@ -54,11 +54,20 @@ By separating training and test data into two separate files, it allows us to ma
 data when it comes to testing it. It will learn to classify stars based on the training data and training data alone, meaning
 we will get the most accurate metrics.
 
+## Moving from `np.random.uniform(1, 6)` to `np.random.normal(5, 0,5)`
+
+I updated the fake star generation function to use a Gaussian distribution with a mean of 5 and a standard deviation of
+0.5 as the ML model was using high visual magnitude values (<4) as a shortcut for detecting fake stars.
+
+## How the minimum star separation inadvertently gave the model a guaranteed 100% accuracy
+
+By introducing a minimum catalogued star separation field to our data frames (like the paper mentions using in section III.II)
+we gave the model an even better shortcut than it had when we used a uniform visual magnitude distribution.
+
 # Tech Stack
 
-- Languages used:
-- Frameworks/libraries:
-- Tools and platforms:
+- Languages used: Python
+- Frameworks/libraries: astroquery, astropy, pandas, numpy, scikit-learn
 
 ---
 

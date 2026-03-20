@@ -67,7 +67,8 @@ def generate_false_stars(ra, dec, max_no_false, fov):
         star_hip = -1
         star_ra = np.random.uniform(ra_range["minBound"], ra_range["maxBound"]) % 360
         star_dec = np.random.uniform(dec_range["minBound"], dec_range["maxBound"])
-        star_vmag = np.random.uniform(0, 6.0)
+        star_vmag = np.random.normal(5, 0.5)
+        star_vmag = np.clip(star_vmag, 1, 6)
 
         star = {
             "HIP": star_hip,

@@ -23,11 +23,34 @@ Project description.
 
 # Engineering Decisions
 
-For each non-obvious technical choice made in this project:
-- What decision was made?
-- What were the alternatives considered?
-- Why was this approach chosen over the alternatives?
-- What are the known limitations or tradeoffs of this choice?
+## Using astropy's separation method instead of Haversine formula:
+```python
+def angular_separation(ra1, dec1, ra2, dec2):
+    ra1, dec1, ra2, dec2 = radians(ra1), radians(dec1), radians(ra2), radians(dec2)
+    delta_phi = abs(dec1 - dec2)
+    delta_lambda = abs(ra1 - ra2)
+
+    delta_sigma = 2 * asin(sqrt(sin(delta_phi / 2) ** 2 + cos(dec1) * cos(dec2) * sin(delta_lambda / 2) **2 ))
+
+    return degrees(delta_sigma)
+
+ra = np.random.uniform(0, 360)
+dec = np.random.uniform(-90, 90)
+filtered_frame = get_stars_in_fov(HIPPARCOS, ra, dec, 4)
+
+ra1 = 340
+ra2 = 350
+dec1 = 70
+dec2 = 80
+
+c1 = SkyCoord(ra=ra1, dec=dec1, unit="deg")
+c2 = SkyCoord(ra=ra2, dec=dec2, unit="deg")
+
+print(angular_separation(ra1, dec1, ra2, dec2), c1.separation(c2))
+```
+returns `10.293451406994345 10d17m36.42506518s`, converted to degrees, my calculation is accurate to at least 6 significant figures.
+However, astropy's separation method is preferred as we can directly pass table columns into the method rather than doing
+scalar operations.
 
 # Tech Stack
 
